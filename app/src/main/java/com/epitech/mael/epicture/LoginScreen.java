@@ -18,7 +18,7 @@ public class LoginScreen extends AppCompatActivity {
         final WebView webView = new WebView(this);
         layout.addView(webView);
         setContentView(layout);
-        webView.loadUrl("@string/IMGUR_login_url");
+        webView.loadUrl("https://api.imgur.com/oauth2/authorize?client_id=3403a352cf85672&response_type=token&state=APPLICATION_STATE");
         webView.clearCache(true);
         webView.clearFormData();
         webView.clearHistory();
