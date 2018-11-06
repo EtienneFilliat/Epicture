@@ -97,22 +97,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (item.itemId) {
 
-            R.id.nav_camera -> {
-                deleteCookies()
-            }
-
-            R.id.nav_gallery -> {
+            R.id.nav_my_pictures -> {
 
             }
-
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_share -> {
+            R.id.nav_search -> {
 
             }
-            R.id.nav_send -> {
+            R.id.nav_upload -> {
 
+            }
+            R.id.nav_manage_favorites -> {
+
+            }
+            R.id.nav_logout -> {
+                LogoutUser()
             }
         }
 
@@ -120,18 +118,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun deleteCookies()
+    private fun LogoutUser()
     {
         val cookieManager = CookieManager.getInstance()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cookieManager.removeAllCookies(ValueCallback<Boolean> { value ->
-                Log.d(
-                        "COOKIE/",
-                        "Cookie removed " + value!!
-                )
+                Log.d("LOGOUT", "Cookie removed: " + value)
             })
+        } else {    
+            cookieManager.removeAllCookies(null)
         }
         val newIntent = Intent(this, LoginScreen::class.java)
+        newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(newIntent)
     }
 }
