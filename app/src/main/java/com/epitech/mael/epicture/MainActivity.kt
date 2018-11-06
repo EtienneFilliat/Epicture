@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Response
 import com.epitech.mael.epicture.Imgur.*
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.content_main.*
 
 @Suppress("INACCESSIBLE_TYPE")
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onResponse(call: Call<Avatar>, response: Response<Avatar>) {
                 val url = response.body()?.avatarUrl()
-                Picasso.get().load(url).into(NavUsernameImage)
+                Picasso.get().load(url).transform(CropCircleTransformation()).into(NavUsernameImage)
             }
 
             override fun onFailure(call: Call<Avatar>, t: Throwable) {
