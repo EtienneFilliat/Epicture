@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_upload -> {
 
             }
-            R.id.nav_manage_favorites -> {
+            R.id.nav_favorites -> {
 
             }
             R.id.nav_logout -> {
