@@ -29,7 +29,7 @@ public final class ApiHandler {
                     }
                 }).build();
         return new Retrofit.Builder()
-                .baseUrl("@string/imgur_api_baseurl")
+                .baseUrl("https://api.imgur.com/3/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
