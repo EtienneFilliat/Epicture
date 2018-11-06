@@ -31,7 +31,6 @@ public class LoginScreen extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView webview, String url) {
-                Log.i("INFO/", "Login Page:");
                 if (url.contains("callback") && getUserInfos(url)) {
                     Intent newIntent;
                     newIntent = new Intent(LoginScreen.this, MainActivity.class);
