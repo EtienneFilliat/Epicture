@@ -1,5 +1,6 @@
 package com.epitech.mael.epicture.Imgur;
 
+import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -9,4 +10,7 @@ public interface ImgurApi {
     */
     @GET("account/{user}/avatar")
     Call<Avatar> getAvatar(@Path("user") String user);
+
+    @GET("account/{user}/images")
+    Call<ImageList> getUserImages(@Path("user") String user);
 }

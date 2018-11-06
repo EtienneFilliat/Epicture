@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_my_pictures -> {
-
+                DisplayUserImages()
             }
             R.id.nav_search -> {
 
@@ -116,6 +116,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun DisplayUserImages() {
+        val username = intent.getStringExtra("username")
+        val accessToken = intent.getStringExtra("accessToken")
+
+        ApiHandler().getService(accessToken).getUserImages(username).enqueue(object : retrofit2.Callback<ImageList> {
+            override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
+                val payload = response.body()!!.data
+                runOnUiThread {
+                    recyclerView_main.adapter = UserImagesAdapter(payload, accessToken)
+                }
+            }
+
+            override fun onFailure(call: Call<ImageList>, t: Throwable) {
+                Log.i("nFailure:", "FAIL")
+            }
+        })
     }
 
     private fun LogoutUser()
