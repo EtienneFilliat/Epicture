@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.image_item_row.view.*
 
 class UserImagesAdapter(private val data: List<ImageList.Image>, private val token: String) : RecyclerView.Adapter<UserImagesAdapter.CustomViewHolder>() {
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val row = layoutInflater.inflate(R.layout.image_item_row, parent, false)
