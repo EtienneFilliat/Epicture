@@ -8,4 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="IMGUR_login_url">https://api.imgur.com/oauth2/authorize?client_id=3403a352cf85672&amp;response_type=token&amp;state=APPLICATION_STATE</string>
     <string name="client_secret">d8a240d8dab961b9973a56075f5b4e30fc52a677</string>
+    <string name="logout_button">Logout</string>
+    <string name="account_menu">Account</string>
 </resources>
