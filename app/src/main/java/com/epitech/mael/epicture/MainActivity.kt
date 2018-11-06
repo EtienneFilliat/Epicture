@@ -121,13 +121,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun LogoutUser()
     {
         val cookieManager = CookieManager.getInstance()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cookieManager.removeAllCookies(ValueCallback<Boolean> { value ->
-                Log.d("LOGOUT", "Cookie removed: " + value)
-            })
-        } else {    
-            cookieManager.removeAllCookies(null)
-        }
+        cookieManager.removeAllCookies(ValueCallback<Boolean> { value ->
+            Log.d("LOGOUT", "Cookie removed: " + value)
+        })
         val newIntent = Intent(this, LoginScreen::class.java)
         newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(newIntent)
