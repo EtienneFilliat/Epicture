@@ -1,6 +1,7 @@
 package com.epitech.mael.epicture
 
 import android.app.PendingIntent.getActivity
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -25,11 +26,14 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.content_main.*
 import android.graphics.Bitmap
+import android.net.Uri
 import android.provider.MediaStore
+import android.support.v7.app.AlertDialog
 import android.util.Base64
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import okhttp3.*
+import java.lang.reflect.Array
 
 
 @Suppress("INACCESSIBLE_TYPE")
@@ -139,26 +143,46 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 123 && resultCode == RESULT_OK && data != null) {
-            val pickedImage = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pickedImage)
-            val encodedBitmap = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100)
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == 1) {
+                val pickedImage = data.data
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pickedImage)
+                val encodedBitmap = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100)
+                val accessToken = intent.getStringExtra("accessToken")
+                val mediaType = MediaType.parse("text/plain")
+                val body = RequestBody.create(mediaType, encodedBitmap)
+                Toast.makeText(applicationContext,  "Uploading...",
+                        Toast.LENGTH_LONG).show()
+                ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
 
-            val accessToken = intent.getStringExtra("accessToken")
-            val mediaType = MediaType.parse("text/plain")
-            val body = RequestBody.create(mediaType, encodedBitmap)
-            Toast.makeText(applicationContext,  "Uploading...",
-                    Toast.LENGTH_LONG).show()
-            ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
+            }
+            else if (requestCode == 2) {
+                val pickedBitmap = data.extras.get("data") as Bitmap
+                val encodedBitmap = encodeToBase64(pickedBitmap, Bitmap.CompressFormat.JPEG, 100)
+                val accessToken = intent.getStringExtra("accessToken")
+                val mediaType = MediaType.parse("text/plain")
+                val body = RequestBody.create(mediaType, encodedBitmap)
+                Toast.makeText(applicationContext,  "Uploading...",
+                        Toast.LENGTH_LONG).show()
+                ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
 
-                }
-            })
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+                    }
+                })
+            }
         }
 
     }
@@ -169,11 +193,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)
     }
 
-    private fun UploadImage() {
+    private fun choosePicFromGallery() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123)
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(Intent.createChooser(intent, "Choose a Picture"), 1)
+    }
+
+    private fun takePicFromCamera() {
+        val intent = Intent()
+        intent.action = MediaStore.ACTION_IMAGE_CAPTURE
+        startActivityForResult(Intent.createChooser(intent, "Take a Picture"), 2)
+    }
+
+    private fun showPictureDialog() {
+        val pictureDialog = AlertDialog.Builder(this)
+        pictureDialog.setTitle("Upload on Imgur")
+        val pictureDialogItems = arrayOf<String>("Select photo from gallery", "Capture photo from camera")
+        pictureDialog.setItems(pictureDialogItems, DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                0 -> {
+                    choosePicFromGallery()
+                }
+                1 -> {
+                    takePicFromCamera()
+                }
+            }
+        })
+        pictureDialog.show()
+    }
+
+    private fun UploadImage() {
+        showPictureDialog()
     }
 
     private fun LogoutUser()
