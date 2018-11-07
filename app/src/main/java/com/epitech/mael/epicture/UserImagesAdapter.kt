@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.epitech.mael.epicture.Imgur.ImageList
+import com.epitech.mael.epicture.Imgur.ImageList.Image
 import kotlinx.android.synthetic.main.image_item_row.view.*
 
-class UserImagesAdapter(private val data: List<ImageList.Image>, private val token: String) : RecyclerView.Adapter<UserImagesAdapter.CustomViewHolder>() {
-
-
+class UserImagesAdapter(private val data: List<Image>, private val token: String) : RecyclerView.Adapter<UserImagesAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

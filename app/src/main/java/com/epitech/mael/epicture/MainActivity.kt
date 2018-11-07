@@ -1,7 +1,6 @@
 package com.epitech.mael.epicture
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -14,6 +13,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -21,8 +22,6 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 import retrofit2.Call
 import retrofit2.Response
 import com.epitech.mael.epicture.Imgur.*
-import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.content_main.*
 
 @Suppress("INACCESSIBLE_TYPE")
@@ -67,11 +66,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onResponse(call: Call<Avatar>, response: Response<Avatar>) {
                 val url = response.body()?.avatarUrl()
-                Picasso.get().load(url).transform(CropCircleTransformation()).into(NavUsernameImage)
+                Glide.with(this@MainActivity)
+                        .load(url)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(NavUsernameImage)
             }
 
             override fun onFailure(call: Call<Avatar>, t: Throwable) {
-                println("Error fetch Avatar")
+                Log.e("onCreateOptionsMenu", "Unable to load user avatar")
             }
         })
 
@@ -131,7 +133,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             override fun onFailure(call: Call<ImageList>, t: Throwable) {
-                Log.i("nFailure:", "FAIL")
+                Log.e("DisplayUserImages:", "Couldn't display UserImages")
             }
         })
     }
