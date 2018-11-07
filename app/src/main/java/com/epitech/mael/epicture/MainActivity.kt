@@ -15,6 +15,8 @@ import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.epitech.mael.epicture.Adapters.AlbumAdapter
+import com.epitech.mael.epicture.Adapters.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        Log.e("TOKEN", intent.getStringExtra("accessToken"))
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -109,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_favorites -> {
-
+                DisplayFavoriteImages()
             }
             R.id.nav_logout -> {
                 LogoutUser()
@@ -120,6 +123,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    private fun DisplayFavoriteImages() {
+        val username = intent.getStringExtra("username")
+        val accessToken = intent.getStringExtra("accessToken")
+
+        ApiHandler().getService(accessToken).getUserFavorites(username).enqueue(object : retrofit2.Callback<AlbumList> {
+            override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
+                val payload = response.body()!!.data
+                runOnUiThread {
+                    recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row)
+                }
+            }
+
+            override fun onFailure(call: Call<AlbumList>, t: Throwable) {
+                Log.e("DisplayFavoriteImages:", "Couldn't display User Favorites")
+            }
+        })
+    }
+
     private fun DisplayUserImages() {
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
@@ -128,7 +149,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
                 val payload = response.body()!!.data
                 runOnUiThread {
-                    recyclerView_main.adapter = UserImagesAdapter(payload, accessToken)
+                    recyclerView_main.adapter = ImagesAdapter(payload, accessToken, R.layout.image_item_row)
                 }
             }
 
