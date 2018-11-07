@@ -1,7 +1,8 @@
 package com.epitech.mael.epicture
 
+import android.app.PendingIntent.getActivity
+import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -24,6 +25,16 @@ import com.epitech.mael.epicture.Imgur.*
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.content_main.*
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
+import android.support.v7.app.AlertDialog
+import android.util.Base64
+import android.widget.Toast
+import java.io.ByteArrayOutputStream
+import okhttp3.*
+import java.lang.reflect.Array
+
 
 @Suppress("INACCESSIBLE_TYPE")
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -33,9 +44,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener {
+            UploadImage()
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -63,7 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
 
-        ApiHandler().getService(accessToken).getAvatar(username).enqueue(object : retrofit2.Callback<Avatar> {
+        ApiHandler().getService(accessToken, null).getAvatar(username).enqueue(object : retrofit2.Callback<Avatar> {
 
             override fun onResponse(call: Call<Avatar>, response: Response<Avatar>) {
                 val url = response.body()?.avatarUrl()
@@ -91,10 +101,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-
-        val username = intent.getStringExtra("username")
-        val accessToken = intent.getStringExtra("accessToken")
-
         when (item.itemId) {
 
             R.id.nav_my_pictures -> {
@@ -104,7 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_upload -> {
-
+                UploadImage()
             }
             R.id.nav_favorites -> {
 
@@ -122,7 +128,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
 
-        ApiHandler().getService(accessToken).getUserImages(username).enqueue(object : retrofit2.Callback<ImageList> {
+        ApiHandler().getService(accessToken, null).getUserImages(username).enqueue(object : retrofit2.Callback<ImageList> {
             override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
                 val payload = response.body()!!.data
                 runOnUiThread {
@@ -134,6 +140,91 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.i("nFailure:", "FAIL")
             }
         })
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == 1) {
+                val pickedImage = data.data
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pickedImage)
+                val encodedBitmap = encodeToBase64(bitmap, Bitmap.CompressFormat.JPEG, 100)
+                val accessToken = intent.getStringExtra("accessToken")
+                val mediaType = MediaType.parse("text/plain")
+                val body = RequestBody.create(mediaType, encodedBitmap)
+                Toast.makeText(applicationContext,  "Uploading...",
+                        Toast.LENGTH_LONG).show()
+                ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+                    }
+                })
+            }
+            else if (requestCode == 2) {
+                val pickedBitmap = data.extras.get("data") as Bitmap
+                val encodedBitmap = encodeToBase64(pickedBitmap, Bitmap.CompressFormat.JPEG, 100)
+                val accessToken = intent.getStringExtra("accessToken")
+                val mediaType = MediaType.parse("text/plain")
+                val body = RequestBody.create(mediaType, encodedBitmap)
+                Toast.makeText(applicationContext,  "Uploading...",
+                        Toast.LENGTH_LONG).show()
+                ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+                    }
+                })
+            }
+        }
+
+    }
+
+    private fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String {
+        val byteArrayOS = ByteArrayOutputStream()
+        image.compress(compressFormat, quality, byteArrayOS)
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)
+    }
+
+    private fun choosePicFromGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(Intent.createChooser(intent, "Choose a Picture"), 1)
+    }
+
+    private fun takePicFromCamera() {
+        val intent = Intent()
+        intent.action = MediaStore.ACTION_IMAGE_CAPTURE
+        startActivityForResult(Intent.createChooser(intent, "Take a Picture"), 2)
+    }
+
+    private fun showPictureDialog() {
+        val pictureDialog = AlertDialog.Builder(this)
+        pictureDialog.setTitle("Upload on Imgur")
+        val pictureDialogItems = arrayOf<String>("Select photo from gallery", "Capture photo from camera")
+        pictureDialog.setItems(pictureDialogItems, DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                0 -> {
+                    choosePicFromGallery()
+                }
+                1 -> {
+                    takePicFromCamera()
+                }
+            }
+        })
+        pictureDialog.show()
+    }
+
+    private fun UploadImage() {
+        showPictureDialog()
     }
 
     private fun LogoutUser()
