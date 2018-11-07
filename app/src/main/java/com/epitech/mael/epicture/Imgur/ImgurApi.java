@@ -1,6 +1,9 @@
 package com.epitech.mael.epicture.Imgur;
 
 import java.util.List;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -19,4 +22,7 @@ public interface ImgurApi {
 
     /*@POST("/image/{imageHash}/favorite")
     Call<AlbumList> addToFavorites(@Path("imageHash") String hash);*/
+  
+    @POST("image")
+    Call<ResponseBody> getUploadResponse(@Body RequestBody body);
 }
