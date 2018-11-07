@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
 
-        ApiHandler().getService(accessToken).getUserFavorites(username).enqueue(object : retrofit2.Callback<AlbumList> {
+        ApiHandler().getService(accessToken, null).getUserFavorites(username).enqueue(object : retrofit2.Callback<AlbumList> {
             override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
                 val payload = response.body()!!.data
                 runOnUiThread {
