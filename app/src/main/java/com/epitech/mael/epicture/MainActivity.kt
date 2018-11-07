@@ -15,6 +15,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.epitech.mael.epicture.Adapters.AlbumAdapter
+import com.epitech.mael.epicture.Adapters.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -22,8 +26,6 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 import retrofit2.Call
 import retrofit2.Response
 import com.epitech.mael.epicture.Imgur.*
-import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.content_main.*
 import android.graphics.Bitmap
 import android.net.Uri
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        Log.e("TOKEN", intent.getStringExtra("accessToken"))
 
         fab.setOnClickListener {
             UploadImage()
@@ -77,11 +80,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             override fun onResponse(call: Call<Avatar>, response: Response<Avatar>) {
                 val url = response.body()?.avatarUrl()
-                Picasso.get().load(url).transform(CropCircleTransformation()).into(NavUsernameImage)
+                Glide.with(this@MainActivity)
+                        .load(url)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(NavUsernameImage)
             }
 
             override fun onFailure(call: Call<Avatar>, t: Throwable) {
-                println("Error fetch Avatar")
+                Log.e("onCreateOptionsMenu", "Unable to load user avatar")
             }
         })
 
@@ -113,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 UploadImage()
             }
             R.id.nav_favorites -> {
-
+                DisplayFavoriteImages()
             }
             R.id.nav_logout -> {
                 LogoutUser()
@@ -124,6 +130,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    private fun DisplayFavoriteImages() {
+        val username = intent.getStringExtra("username")
+        val accessToken = intent.getStringExtra("accessToken")
+
+        ApiHandler().getService(accessToken, null).getUserFavorites(username).enqueue(object : retrofit2.Callback<AlbumList> {
+            override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
+                val payload = response.body()!!.data
+                runOnUiThread {
+                    recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row)
+                }
+            }
+
+            override fun onFailure(call: Call<AlbumList>, t: Throwable) {
+                Log.e("DisplayFavoriteImages:", "Couldn't display User Favorites")
+            }
+        })
+    }
+
     private fun DisplayUserImages() {
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
@@ -132,12 +156,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
                 val payload = response.body()!!.data
                 runOnUiThread {
-                    recyclerView_main.adapter = UserImagesAdapter(payload, accessToken)
+                    recyclerView_main.adapter = ImagesAdapter(payload, accessToken, R.layout.image_item_row)
                 }
             }
 
             override fun onFailure(call: Call<ImageList>, t: Throwable) {
-                Log.i("nFailure:", "FAIL")
+                Log.e("DisplayUserImages:", "Couldn't display UserImages")
             }
         })
     }

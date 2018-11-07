@@ -1,19 +1,20 @@
 package com.epitech.mael.epicture.Imgur;
 
 import java.util.List;
+import com.epitech.mael.epicture.Imgur.ImageList.Image;
 
-public class ImageList {
+public class AlbumList {
 
-    public List<Image> data;
+    public List<Album> data;
 
-    public class Image {
+    public class Album {
 
         public String id;
-        public String deletehash;
         public String title;
         public String description;
-        public String views;
         public String link;
+        public Integer views;
         public boolean is_album;
+        public List<Image> images;
     }
 }

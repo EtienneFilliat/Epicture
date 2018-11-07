@@ -17,6 +17,12 @@ public interface ImgurApi {
     @GET("account/{user}/images")
     Call<ImageList> getUserImages(@Path("user") String user);
 
+    @GET("account/{user}/favorites")
+    Call<AlbumList> getUserFavorites(@Path("user") String user);
+
+    /*@POST("/image/{imageHash}/favorite")
+    Call<AlbumList> addToFavorites(@Path("imageHash") String hash);*/
+  
     @POST("image")
     Call<ResponseBody> getUploadResponse(@Body RequestBody body);
 }
