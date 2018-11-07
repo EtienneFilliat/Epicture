@@ -1,5 +1,6 @@
 package com.epitech.mael.epicture
 
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.util.Base64
+import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import okhttp3.*
 
@@ -38,9 +40,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener {
+            UploadImage()
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -96,10 +97,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-
-        val username = intent.getStringExtra("username")
-        val accessToken = intent.getStringExtra("accessToken")
-
         when (item.itemId) {
 
             R.id.nav_my_pictures -> {
@@ -150,6 +147,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val accessToken = intent.getStringExtra("accessToken")
             val mediaType = MediaType.parse("text/plain")
             val body = RequestBody.create(mediaType, encodedBitmap)
+            Toast.makeText(applicationContext,  "Uploading...",
+                    Toast.LENGTH_LONG).show()
             ApiHandler().getService(accessToken, body).getUploadResponse(body).enqueue(object: retrofit2.Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -157,6 +156,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
                 }
             })
         }
