@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.epitech.mael.epicture.Imgur.ImageList.Image
 import com.epitech.mael.epicture.R
 import kotlinx.android.synthetic.main.image_item_row.view.*
@@ -22,7 +23,9 @@ class ImagesAdapter(private val data: List<Image>, private val token: String, pr
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val image = data[position]
         val thumbnailImageView = holder.view.iv_photo
-        Glide.with(holder.view).load(image.link).into(thumbnailImageView)
+        Glide.with(holder.view)
+                .load(image.link)
+                .into(thumbnailImageView)
     }
 
     override fun getItemCount(): Int {
