@@ -14,6 +14,7 @@ public class AlbumList {
         public String description;
         public String link;
         public Integer views;
+        public boolean favorite;
         public boolean is_album;
         public List<Image> images;
     }

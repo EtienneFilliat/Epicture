@@ -64,10 +64,23 @@
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Info"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/iv_favorite_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_photo" />
+
+            <ImageButton
+                android:id="@+id/iv_favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="172dp"
+                android:layout_marginEnd="172dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_favorites" />
 
         </android.support.constraint.ConstraintLayout>
 
