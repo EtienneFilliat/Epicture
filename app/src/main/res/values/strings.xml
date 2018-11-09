@@ -15,4 +15,6 @@
     <string name="my_pictures_button">My pictures</string>
     <string name="search_button">Search</string>
     <string name="favorites_button">Favorites</string>
+    <string name="image_title_placeholder">No Title</string>
+    <string name="image_description_placeholder">No Description</string>
 </resources>
