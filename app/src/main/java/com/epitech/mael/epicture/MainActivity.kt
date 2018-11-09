@@ -1,10 +1,8 @@
 package com.epitech.mael.epicture
 
-import android.app.PendingIntent.getActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -18,7 +16,6 @@ import android.webkit.ValueCallback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.epitech.mael.epicture.Adapters.AlbumAdapter
-import com.epitech.mael.epicture.Adapters.ImagesAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -28,14 +25,12 @@ import retrofit2.Response
 import com.epitech.mael.epicture.Imgur.*
 import kotlinx.android.synthetic.main.content_main.*
 import android.graphics.Bitmap
-import android.net.Uri
 import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.util.Base64
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
 import okhttp3.*
-import java.lang.reflect.Array
 
 
 @Suppress("INACCESSIBLE_TYPE")
@@ -152,15 +147,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
 
-        ApiHandler().getService(accessToken, null).getUserImages(username).enqueue(object : retrofit2.Callback<AlbumList> {
-            override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
+        ApiHandler().getService(accessToken, null).getUserImages(username).enqueue(object : retrofit2.Callback<ImageList> {
+            override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
                 val payload = response.body()!!.data
                 runOnUiThread {
-                    recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row)
+                    recyclerView_main.adapter = UserImagesAdaptater(payload, accessToken)
                 }
             }
 
-            override fun onFailure(call: Call<AlbumList>, t: Throwable) {
+            override fun onFailure(call: Call<ImageList>, t: Throwable) {
                 Log.e("DisplayUserImages:", "Couldn't display UserImages")
             }
         })

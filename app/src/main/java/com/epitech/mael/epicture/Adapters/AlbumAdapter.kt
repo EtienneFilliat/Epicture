@@ -15,13 +15,13 @@ import retrofit2.Call
 
 class AlbumAdapter(private val data: List<Album>, private val token: String, private val layout: Int) : RecyclerView.Adapter<AlbumAdapter.CustomViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumAdapter.CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val row = layoutInflater.inflate(layout, parent, false)
-        return CustomViewHolder(row)
+        return AlbumAdapter.CustomViewHolder(row)
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlbumAdapter.CustomViewHolder, position: Int) {
         /*
         *   Setup useful variables
          */
