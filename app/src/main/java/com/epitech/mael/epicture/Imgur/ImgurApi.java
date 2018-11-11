@@ -20,8 +20,12 @@ public interface ImgurApi {
     @GET("account/{user}/favorites")
     Call<AlbumList> getUserFavorites(@Path("user") String user);
 
-    /*@POST("/image/{imageHash}/favorite")
-    Call<AlbumList> addToFavorites(@Path("imageHash") String hash);*/
+    @POST("{type}/{imageHash}/favorite")
+    Call<Response> switchFavorites(@Path("type") String type, @Path("imageHash") String hash);
+
+    @FormUrlEncoded
+    @POST("image/{imageHash}")
+    Call<Response> updateImageInfos(@Path("imageHash") String hash, @Field("title") String title, @Field("description") String desc);
   
     @POST("image")
     Call<ResponseBody> getUploadResponse(@Body RequestBody body);
