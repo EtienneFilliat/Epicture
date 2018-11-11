@@ -11,7 +11,7 @@ class SearchAdapter(private val data: List<Album>, private val token: String, pr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapter.CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val row = layoutInflater.inflate(R.layout.search_view, parent, false)
+        val row = layoutInflater.inflate(R.layout.activity_search, parent, false)
         return SearchAdapter.CustomViewHolder(row)
     }
 

@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        Log.e("TOKEN", intent.getStringExtra("accessToken"))
 
         fab.setOnClickListener {
             UploadImage()
@@ -126,7 +125,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun SearchImages() {
+        val newIntent = Intent(this, SearchActivity::class.java)
+        val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
+
+        Log.i("Coucou", username)
+        Log.i("Coucou", accessToken)
+        newIntent.putExtra("username", username)
+        newIntent.putExtra("accessToken", accessToken)
+        this.startActivity(newIntent)
+        /*val accessToken = intent.getStringExtra("accessToken")
 
         ApiHandler()
                 .getService(
@@ -144,7 +152,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
 
                     override fun onFailure(call: Call<AlbumList>, t: Throwable) { Log.e("SearchImages", "Failed to fetch Requested images") }
-                })
+                })*/
+
     }
 
     private fun DisplayFavoriteImages() {
