@@ -18,4 +18,5 @@
     <string name="image_title_placeholder">No Title</string>
     <string name="image_description_placeholder">No Description</string>
     <string name="fav_ic_desc">Press to favotite/un-favorite</string>
+    <string name="querry_placeholder">Querry</string>
 </resources>
