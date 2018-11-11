@@ -13,6 +13,36 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+                            <entry key="actionbar">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="5" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/like (1).png" />
+                                      <entry key="outputName" value="ic_no_fav" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="000000" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                             <entry key="launcherLegacy">
                               <value>
                                 <PersistentState>
@@ -46,7 +76,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
@@ -55,6 +85,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>
