@@ -29,6 +29,7 @@ import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.util.Base64
 import android.widget.Toast
+import com.bumptech.glide.Glide.init
 import java.io.ByteArrayOutputStream
 import okhttp3.*
 
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
 
         fab.setOnClickListener {
             UploadImage()
@@ -54,6 +56,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         recyclerView_main.layoutManager = LinearLayoutManager(this)
+        nav_view.setCheckedItem(R.id.nav_my_pictures)
+        DisplayUserImages()
     }
 
     override fun onBackPressed() {
