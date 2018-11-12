@@ -129,31 +129,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
 
-        Log.i("Coucou", username)
-        Log.i("Coucou", accessToken)
         newIntent.putExtra("username", username)
         newIntent.putExtra("accessToken", accessToken)
         this.startActivity(newIntent)
-        /*val accessToken = intent.getStringExtra("accessToken")
-
-        ApiHandler()
-                .getService(
-                        accessToken,
-                        null
-                ).getSearchedImages(
-                        ImgurApi.Sort.time,
-                        ImgurApi.Window.day,
-                        0,
-                        "Cats"
-                ).enqueue(object : retrofit2.Callback<AlbumList> {
-                    override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
-                        var payload = response.body()!!.data
-                        runOnUiThread { recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row) }
-                    }
-
-                    override fun onFailure(call: Call<AlbumList>, t: Throwable) { Log.e("SearchImages", "Failed to fetch Requested images") }
-                })*/
-
     }
 
     private fun DisplayFavoriteImages() {
