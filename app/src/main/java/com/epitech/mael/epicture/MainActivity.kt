@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        Log.e("TOKEN", intent.getStringExtra("accessToken"))
 
 
         fab.setOnClickListener {
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 DisplayUserImages()
             }
             R.id.nav_search -> {
-
+                SearchImages()
             }
             R.id.nav_upload -> {
                 UploadImage()
@@ -129,6 +128,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    private fun SearchImages() {
+        val newIntent = Intent(this, SearchActivity::class.java)
+        val username = intent.getStringExtra("username")
+        val accessToken = intent.getStringExtra("accessToken")
+
+        newIntent.putExtra("username", username)
+        newIntent.putExtra("accessToken", accessToken)
+        this.startActivity(newIntent)
+    }
+
     private fun DisplayFavoriteImages() {
         val username = intent.getStringExtra("username")
         val accessToken = intent.getStringExtra("accessToken")
@@ -136,9 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ApiHandler().getService(accessToken, null).getUserFavorites(username).enqueue(object : retrofit2.Callback<AlbumList> {
             override fun onResponse(call: Call<AlbumList>, response: Response<AlbumList>) {
                 val payload = response.body()!!.data
-                runOnUiThread {
-                    recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row)
-                }
+                runOnUiThread { recyclerView_main.adapter = AlbumAdapter(payload, accessToken, R.layout.image_item_row) }
             }
 
             override fun onFailure(call: Call<AlbumList>, t: Throwable) {
@@ -154,9 +161,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ApiHandler().getService(accessToken, null).getUserImages(username).enqueue(object : retrofit2.Callback<ImageList> {
             override fun onResponse(call: Call<ImageList>, response: Response<ImageList>) {
                 val payload = response.body()!!.data
-                runOnUiThread {
-                    recyclerView_main.adapter = UserImagesAdaptater(payload, accessToken)
-                }
+                runOnUiThread { recyclerView_main.adapter = UserImagesAdaptater(payload, accessToken) }
             }
 
             override fun onFailure(call: Call<ImageList>, t: Throwable) {

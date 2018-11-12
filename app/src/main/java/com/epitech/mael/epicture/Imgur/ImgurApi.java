@@ -11,6 +11,31 @@ public interface ImgurApi {
     /*
     ** Imgur's api in retrofit format.
     */
+
+    /*
+    *   Useful Enums
+     */
+
+    enum Sort {
+        time,
+        viral,
+        top
+    }
+
+    enum Window {
+        day,
+        week,
+        month,
+        year,
+        all
+    }
+
+    /*
+    *   ==========================================
+    *   =             GET CALLS                  =
+    *   ==========================================
+     */
+
     @GET("account/{user}/avatar")
     Call<Avatar> getAvatar(@Path("user") String user);
 
@@ -19,6 +44,15 @@ public interface ImgurApi {
 
     @GET("account/{user}/favorites")
     Call<AlbumList> getUserFavorites(@Path("user") String user);
+
+    @GET("gallery/search/{sort}/{window}/{page}")
+    Call<AlbumList> getSearchedImages(@Path("sort") Sort sort, @Path("window") Window window, @Path("page") int page, @Query("q") String query);
+
+    /*
+     *   ==========================================
+     *   =             POST CALLS                 =
+     *   ==========================================
+     */
 
     @POST("{type}/{imageHash}/favorite")
     Call<Response> switchFavorites(@Path("type") String type, @Path("imageHash") String hash);
