@@ -28,6 +28,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
         setSupportActionBar((findViewById(R.id.search_bar)))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         search_list.layoutManager = LinearLayoutManager(this)
         search_list.hasFixedSize()
@@ -77,7 +78,10 @@ class SearchActivity : AppCompatActivity() {
             // as a favorite...
             true
         }
-
+        android.R.id.home -> {
+            this.finish()
+            true
+        }
         else -> {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.

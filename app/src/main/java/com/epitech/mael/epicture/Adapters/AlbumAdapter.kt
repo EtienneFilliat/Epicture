@@ -31,7 +31,9 @@ class AlbumAdapter(private val data: List<Album>, private val token: String, pri
         val title = holder.view.iv_title
         val description = holder.view.iv_description
         val favButton = holder.view.iv_favorite_button
+        val viewCounter = holder.view.iv_views
 
+        viewCounter.text = album.views.toString()
         title.text = album.title
         if (album.is_album) {
             description.text = album.images[0].description
