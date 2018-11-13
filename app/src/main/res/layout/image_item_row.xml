@@ -77,10 +77,34 @@
                 android:layout_marginEnd="172dp"
                 android:layout_marginBottom="8dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/fav_ic_desc"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/ic_favorites" />
+
+            <TextView
+                android:id="@+id/iv_views"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/view_counter_desc"
+                android:drawableStart="@drawable/ic_eye"
+                android:drawablePadding="6dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center"
+                android:text="@string/default_view_counter"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Info"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_favorite_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_description" />
 
         </android.support.constraint.ConstraintLayout>
 
