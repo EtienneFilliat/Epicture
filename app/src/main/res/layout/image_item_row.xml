@@ -97,7 +97,6 @@
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center"
                 android:text="@string/default_view_counter"
-                android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Info"
                 android:textSize="18sp"
                 android:textStyle="bold"
