@@ -67,6 +67,12 @@ class UserImagesAdaptater(private val data: List<ImageList.Image>, private val t
                 false
             }
         }
+        delButton.setOnClickListener { _ ->
+            ApiHandler().getService(token, null).deleteImage(image.id).enqueue(object : retrofit2.Callback<Response> {
+                override fun onResponse(call: Call<Response>, response: retrofit2.Response<Response>) {}
+                override fun onFailure(call: Call<Response>, t: Throwable) { Log.w("DeleteImage", "Failed to delete an image") }
+            })
+        }
     }
 
     override fun getItemCount(): Int {
