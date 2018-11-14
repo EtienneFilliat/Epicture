@@ -12,6 +12,7 @@ import com.epitech.mael.epicture.Imgur.ApiHandler
 import com.epitech.mael.epicture.Imgur.ImageList
 import com.epitech.mael.epicture.Imgur.Response
 import android.support.v7.app.AlertDialog
+import android.widget.Toast
 import kotlinx.android.synthetic.main.user_images_manager.view.*
 import retrofit2.Call
 
@@ -80,6 +81,8 @@ class UserImagesAdaptater(private val data: List<ImageList.Image>, private val t
                             override fun onResponse(call: Call<Response>, response: retrofit2.Response<Response>) {}
                             override fun onFailure(call: Call<Response>, t: Throwable) { Log.w("DeleteImage", "Failed to delete an image") }
                         })
+                        Toast.makeText(holder.view.context,  "Image deleted",
+                                Toast.LENGTH_SHORT).show()
                     }
                     1 -> {
                     }
