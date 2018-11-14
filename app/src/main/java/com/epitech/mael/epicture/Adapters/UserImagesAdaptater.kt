@@ -31,6 +31,8 @@ class UserImagesAdaptater(private val data: List<ImageList.Image>, private val t
         val thumbnailImageView = holder.view.iv_photo
         val title = holder.view.iv_title
         val description = holder.view.iv_description
+        val delButton = holder.view.iv_delete_button
+
 
         title.setText(image.title)
         description.setText(image.description)

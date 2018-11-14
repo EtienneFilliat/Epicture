@@ -31,10 +31,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/image_title_placeholder"
-                android:inputType="text"
-                android:singleLine="true"
                 android:imeOptions="actionDone"
+                android:inputType="text"
                 android:selectAllOnFocus="false"
+                android:singleLine="true"
                 android:text="@string/image_title_placeholder"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/colorPrimary"
@@ -65,16 +65,29 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/image_description_placeholder"
+                android:imeOptions="actionDone"
                 android:inputType="text"
+                android:selectAllOnFocus="false"
                 android:text="@string/image_description_placeholder"
                 android:textAppearance="@style/TextAppearance.Compat.Notification.Info"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic"
-                android:imeOptions="actionDone"
-                android:selectAllOnFocus="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_photo"/>
+                app:layout_constraintTop_toBottomOf="@+id/iv_photo" />
+
+            <ImageButton
+                android:id="@+id/iv_delete_button"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/del_ic_desc"
+                app:layout_constraintEnd_toEndOf="@+id/iv_title"
+                app:layout_constraintHorizontal_bias="0.975"
+                app:layout_constraintStart_toStartOf="@+id/iv_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_delete" />
 
         </android.support.constraint.ConstraintLayout>
 
