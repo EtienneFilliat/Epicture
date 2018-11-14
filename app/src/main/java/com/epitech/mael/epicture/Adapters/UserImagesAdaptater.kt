@@ -19,7 +19,7 @@ import retrofit2.Call
 
 
 
-class UserImagesAdaptater(private val data: List<ImageList.Image>, private val token: String) : RecyclerView.Adapter<UserImagesAdaptater.CustomViewHolder>() {
+class UserImagesAdaptater(private val data:  MutableList<ImageList.Image>, private val token: String) : RecyclerView.Adapter<UserImagesAdaptater.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserImagesAdaptater.CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -84,7 +84,9 @@ class UserImagesAdaptater(private val data: List<ImageList.Image>, private val t
 
                         })
                         Toast.makeText(holder.view.context,  "Image deleted",
-                                Toast.LENGTH_SHORT).show()
+                                Toast.LENGTH_LONG).show()
+                        data.removeAt(position)
+                        notifyDataSetChanged()
                     }
                     1 -> {
                     }
