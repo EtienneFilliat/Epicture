@@ -9,11 +9,11 @@ import retrofit2.http.*;
 
 public interface ImgurApi {
     /*
-    ** Imgur's api in retrofit format.
-    */
+     ** Imgur's api in retrofit format.
+     */
 
     /*
-    *   Useful Enums
+     *   Useful Enums
      */
 
     enum Sort {
@@ -31,9 +31,9 @@ public interface ImgurApi {
     }
 
     /*
-    *   ==========================================
-    *   =             GET CALLS                  =
-    *   ==========================================
+     *   ==========================================
+     *   =             GET CALLS                  =
+     *   ==========================================
      */
 
     @GET("account/{user}/avatar")
@@ -60,7 +60,17 @@ public interface ImgurApi {
     @FormUrlEncoded
     @POST("image/{imageHash}")
     Call<Response> updateImageInfos(@Path("imageHash") String hash, @Field("title") String title, @Field("description") String desc);
-  
+
     @POST("image")
     Call<ResponseBody> getUploadResponse(@Body RequestBody body);
+
+
+    /*
+     *   ==========================================
+     *   =             DELETE CALLS                 =
+     *   ==========================================
+     */
+
+    @DELETE("image/{imageHash}")
+    Call<Response> deleteImage(@Path(  "imageHash") String hash);
 }
