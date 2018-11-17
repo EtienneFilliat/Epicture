@@ -79,15 +79,10 @@ class SearchActivity : AppCompatActivity() {
             val sortByDialogItems = arrayOf<String>("Time", "Viral", "Top")
             sortByDialog.setItems(sortByDialogItems, DialogInterface.OnClickListener { dialog, which ->
                 when (which) {
-                    0 -> {
-                        _sort = ImgurApi.Sort.time
-                    }
-                    1 -> {
-                        _sort = ImgurApi.Sort.viral
-                    }
-                    2 -> {
-                        _sort = ImgurApi.Sort.top
-                    }
+                    0 -> _sort = ImgurApi.Sort.time
+                    1 -> _sort = ImgurApi.Sort.viral
+                    2 -> _sort = ImgurApi.Sort.top
+                    else -> ImgurApi.Sort.top
                 }
             })
             sortByDialog.show()
@@ -96,21 +91,12 @@ class SearchActivity : AppCompatActivity() {
             val timeFrameDialogItems = arrayOf<String>("Day", "Week", "Month", "Year", "All")
             timeFrameDialog.setItems(timeFrameDialogItems, DialogInterface.OnClickListener { dialog, which ->
                 when (which) {
-                    0 -> {
-                        _window = ImgurApi.Window.day
-                    }
-                    1 -> {
-                        _window = ImgurApi.Window.week
-                    }
-                    2 -> {
-                        _window = ImgurApi.Window.month
-                    }
-                    3 -> {
-                        _window = ImgurApi.Window.year
-                    }
-                    4 -> {
-                        _window = ImgurApi.Window.all
-                    }
+                    0 -> _window = ImgurApi.Window.day
+                    1 -> _window = ImgurApi.Window.week
+                    2 -> _window = ImgurApi.Window.month
+                    3 -> _window = ImgurApi.Window.year
+                    4 -> _window = ImgurApi.Window.all
+                    else -> _window = ImgurApi.Window.day
                 }
             })
             timeFrameDialog.show()
