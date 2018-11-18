@@ -29,7 +29,6 @@ import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.util.Base64
 import android.widget.Toast
-import com.bumptech.glide.Glide.init
 import java.io.ByteArrayOutputStream
 import okhttp3.*
 

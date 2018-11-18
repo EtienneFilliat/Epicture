@@ -34,10 +34,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/like (1).png" />
-                                      <entry key="outputName" value="ic_no_fav" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/down (1).png" />
+                                      <entry key="outputName" value="ic_down_arrow_toogle" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="b72835" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -89,7 +89,28 @@
         </entry>
         <entry key="vectorWizard">
           <value>
-            <PersistentState />
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="values">
+                          <map>
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="height" value="512" />
+                            <entry key="outputName" value="ic_arrow_down" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/arrow-down-solid.svg" />
+                            <entry key="width" value="448" />
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
           </value>
         </entry>
       </map>

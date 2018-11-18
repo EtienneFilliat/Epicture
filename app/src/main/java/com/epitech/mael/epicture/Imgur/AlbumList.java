@@ -13,6 +13,7 @@ public class AlbumList {
         public String title;
         public String description;
         public String link;
+        public String vote;
         public Integer views;
         public boolean favorite;
         public boolean is_album;

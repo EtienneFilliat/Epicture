@@ -20,4 +20,7 @@
     <string name="fav_ic_desc">Press to favotite/un-favorite</string>
     <string name="querry_placeholder">Querry</string>
     <string name="search_label">Search Images</string>
+    <string name="default_view_counter">0</string>
+    <string name="view_counter_desc">View counter</string>
+    <string name="del_ic_desc">click to delete</string>
 </resources>
