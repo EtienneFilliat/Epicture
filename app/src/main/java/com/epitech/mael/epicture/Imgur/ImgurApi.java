@@ -30,6 +30,12 @@ public interface ImgurApi {
         all
     }
 
+    enum Vote {
+        up,
+        down,
+        veto
+    }
+
     /*
      *   ==========================================
      *   =             GET CALLS                  =
@@ -64,6 +70,8 @@ public interface ImgurApi {
     @POST("image")
     Call<ResponseBody> getUploadResponse(@Body RequestBody body);
 
+    @POST("gallery/{Hash}/vote/{vote}")
+    Call<Response> toogleLike(@Path("Hash") String hash, @Path("vote") Vote vote);
 
     /*
      *   ==========================================
