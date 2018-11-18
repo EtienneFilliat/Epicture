@@ -80,5 +80,5 @@ public interface ImgurApi {
      */
 
     @DELETE("image/{imageHash}")
-    Call<Response> deleteImage(@Path(  "imageHash") String hash);
+    Call<Response> deleteImage(@Path("imageHash") String hash);
 }
